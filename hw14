@@ -1,0 +1,55 @@
+import requests
+url='https://www.vox.com/2018/9/25/17901082/trump-un-2018-speech-full-text'
+r=requests.get(url)
+r.encoding='utf8'
+data=str(r.text)
+
+print(data.find('One year ago'))
+print(data.find('Applause'))
+
+text=data[93832:117372]
+
+text.lower()
+
+text.split('</p>')
+
+
+text=text.replace('(',' ')
+text=text.replace(',',' ')
+text=text.replace('.',' ')
+text=text.replace('’s',' ')
+text=text.replace('</p>',' ')
+text=text.replace('<p',' ')
+text=text.replace('>',' ')
+text=text.replace(')',' ')
+text=text.replace('/',' ')
+text=text.replace('id=',' ')
+
+
+
+mydict={}
+words=text.split()
+
+for w in words:
+    if w in mydict:
+        mydict[w]+=1
+    else:
+        mydict[w]=1
+
+
+def most_common(hist):
+    t=[]
+    for key,value in hist.items():
+        t.append((value,key))
+    t.sort(reverse=True)
+    return t
+
+
+for k in sorted (mydict, key=mydict.__getitem__,reverse=True):
+    '%s:%s'%(k,mydict[k])
+
+t= most_common(mydict)
+print('The most common words are:')
+for freq,word in t[:20]:
+    print(word,freq,sep='\t')
+
